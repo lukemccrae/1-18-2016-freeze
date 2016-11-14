@@ -2,7 +2,10 @@ var map;
 var latPosition;
 var longPosition;
 var infowindow;
-var placeName = [];
+var allPlaceName = [];
+var placeGuess = [];
+var placeType = [];
+var dashes = [];
 
 function initMap(latPosition, longPosition) {
 
@@ -35,18 +38,15 @@ $(document).ready(function() {
 
     function initialize() {
         var pyrmont = new google.maps.LatLng(latPosition, longPosition);
-
         map = new google.maps.Map(document.getElementById('map'), {
             center: pyrmont,
             zoom: 15
         });
-
         var request = {
             location: pyrmont,
-            radius: '700',
-            types: ['store']
+            radius: '200',
+            types: ['food']
         };
-
         service = new google.maps.places.PlacesService(map);
         service.nearbySearch(request, callback);
     }
@@ -55,14 +55,16 @@ $(document).ready(function() {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
             for (var i = 0; i < results.length; i++) {
                 var place = results[i];
-                placeName.push(place.name)
+                allPlaceName.push(place.name)
+                placeType.push(place.types[0])
                 console.log(place);
                 createMarker(results[i]);
             }
         }
-        console.log(placeName);
+        console.log(allPlaceName);
+        console.log(placeType);
+        return guessMe();
     }
-
 
     function createMarker(place) {
         var placeLoc = place.geometry.location;
@@ -75,6 +77,24 @@ $(document).ready(function() {
             infowindow.setContent(place.name);
             infowindow.open(map, this);
         });
+    }
+
+    function guessMe() {
+        var randomNumber = Math.floor(Math.random() * allPlaceName.length);
+        placeGuess.push(allPlaceName[randomNumber])
+        $('#greeting').append("The place you're looking for is a " + placeType[randomNumber] + ".")
+        console.log(allPlaceName.length);
+        console.log(randomNumber);
+        console.log(placeGuess);
+        return makeDashes(placeGuess)
+    }
+
+    function makeDashes(placeGuess) {
+        for (var i = 0; i < placeGuess.length; i++) {
+            dashes.push(" _ ");
+        }
+        console.log(dashes);
+        console.log(placeGuess.length)
     }
 });
 
