@@ -84,17 +84,15 @@ $(document).ready(function() {
         placeGuess.push(allPlaceName[randomNumber])
         $('#greeting').append("The place you're looking for is a " + placeType[randomNumber] + ".")
         console.log(allPlaceName.length);
-        console.log(randomNumber);
         console.log(placeGuess);
-        return makeDashes(placeGuess)
-    }
-
-    function makeDashes(placeGuess) {
-        for (var i = 0; i < placeGuess.length; i++) {
-            dashes.push(" _ ");
+        for (var i = 0; i < placeGuess[0].length; i++) {
+            if (placeGuess[0][i] === " ") {
+                dashes[i] = "&nbsp;";
+            } else {
+                dashes[i] = " _ ";
+            }
         }
-        console.log(dashes);
-        console.log(placeGuess.length)
+        $('#guessForm').append(dashes)
     }
 });
 
