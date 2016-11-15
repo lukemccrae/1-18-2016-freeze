@@ -1,0 +1,44 @@
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+#map {
+    height: 15em;
+    width: 20em;
+    margin-top: 3em;
+    border-width: .3em;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+html, body {
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+#greeting {
+    height: 1em;
+    padding-top: .5em;
+}
+
+#guessForm {
+    height: 1em;
+    padding-top: 1.5vh;
+    font-size: 110%;
+    padding-bottom: 2em;
+}
+
+#type {
+    height: 3em;
+}
+
+#inputBox {
+    width: 70%;
+}
