@@ -45,7 +45,7 @@ $(document).ready(function() {
         });
         var request = {
             location: pyrmont,
-            radius: '200',
+            radius: '1000',
             types: ['food']
         };
         service = new google.maps.places.PlacesService(map);
@@ -107,5 +107,13 @@ $(document).ready(function() {
     function isLetter(c) {
         return c.toLowerCase() != c.toUpperCase();
     }
+    $('#inputBox').keyup(function(a) {
+        var keyPress = a.key;
+        var submit = $('#inputBox').val();
+        if (submit === placeGuess[0]) {
+            $('#checkmark').css("display", "block")
+        }
+        console.log(a.key);
+    })
 
 });
