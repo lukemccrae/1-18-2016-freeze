@@ -1,7 +1,9 @@
 var map;
+var randomNumber;
 var latPosition;
 var longPosition;
 var infowindow;
+var allPlace = [];
 var allPlaceName = [];
 var placeGuess = [];
 var placeType = [];
@@ -56,12 +58,14 @@ $(document).ready(function() {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
             for (var i = 0; i < results.length; i++) {
                 var place = results[i];
+                allPlace.push(place)
                 allPlaceName.push(place.name)
                 placeType.push(place.types[0])
-                console.log(place);
+
                 createMarker(results[i]);
             }
         }
+        console.log(allPlace);
         console.log(allPlaceName);
         console.log(placeType);
         return guessMe();
@@ -81,11 +85,12 @@ $(document).ready(function() {
     }
 
     function guessMe() {
-        var randomNumber = Math.floor(Math.random() * allPlaceName.length);
+        randomNumber = Math.floor(Math.random() * allPlaceName.length)
         placeGuess.push(allPlaceName[randomNumber])
         $('#type').append("The place you're looking for is a " + placeType[randomNumber] + ".")
         console.log(allPlaceName.length);
         console.log(placeGuess);
+        console.log(randomNumber);
         for (var i = 0; i < placeGuess[0].length; i++) {
             if (placeGuess[0][i] === " ") {
                 dashes[i] = "&nbsp;";
@@ -102,6 +107,7 @@ $(document).ready(function() {
         }
         console.log(dashes);
         $('#guessForm').append(dashes)
+        directionHint()
     }
 
     function isLetter(c) {
@@ -115,5 +121,15 @@ $(document).ready(function() {
         }
         console.log(a.key);
     })
+
+
+
+    function directionHint() {
+        console.log(allPlace[randomNumber].vicinity);
+        $.get('https://galvanize-cors.herokuapp.com/https://maps.googleapis.com/maps/api/directions/json?origin=' + latPosition + ',' + longPosition + '&destination=' + allPlace[randomNumber].vicinity + '&key=AIzaSyB6mjYhp5ca_RPpOdHu_Ul7E-YY6BYzmms')
+            .done(function(data) {
+                console.log(data.routes[0].legs[0].steps[0].distance.value);
+            })
+    }
 
 });
