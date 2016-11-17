@@ -47,7 +47,7 @@ $(document).ready(function() {
         });
         var request = {
             location: pyrmont,
-            radius: '100',
+            radius: '800',
             types: ['bar']
         };
         service = new google.maps.places.PlacesService(map);
