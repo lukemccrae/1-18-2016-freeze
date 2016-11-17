@@ -36,12 +36,14 @@ html, body {
     margin-top: -.5em;
 }
 
-#howClose {}
-
 #greeting {
     height: 1em;
     margin-bottom: 1em;
     padding-top: .5em;
+}
+
+#street {
+    line-height: .3em;
 }
 
 #checkmarkBox {

@@ -43,12 +43,12 @@ $(document).ready(function() {
         var pyrmont = new google.maps.LatLng(latPosition, longPosition);
         map = new google.maps.Map(document.getElementById('map'), {
             center: pyrmont,
-            zoom: 16
+            zoom: 14
         });
         var request = {
             location: pyrmont,
-            radius: '1000',
-            types: ['food']
+            radius: '80',
+            types: ['bar']
         };
         service = new google.maps.places.PlacesService(map);
         service.nearbySearch(request, callback);
@@ -61,7 +61,6 @@ $(document).ready(function() {
                 allPlace.push(place)
                 allPlaceName.push(place.name)
                 placeType.push(place.types[0])
-
                 createMarker(results[i]);
             }
         }
@@ -76,11 +75,6 @@ $(document).ready(function() {
         var marker = new google.maps.Marker({
             map: map,
             position: place.geometry.location
-        });
-
-        google.maps.event.addListener(marker, 'click', function() {
-            infowindow.setContent(place.name);
-            infowindow.open(map, this);
         });
     }
 
@@ -106,6 +100,7 @@ $(document).ready(function() {
             return c.toLowerCase() != c.toUpperCase();
         }
         console.log(dashes);
+        console.log(allPlace[randomNumber].place_id);
         $('#guessForm').append(dashes)
 
     }
@@ -138,8 +133,16 @@ $(document).ready(function() {
         $.get('https://galvanize-cors.herokuapp.com/https://maps.googleapis.com/maps/api/directions/json?origin=' + latPosition + ',' + longPosition + '&destination=' + allPlace[randomNumber].vicinity + '&key=AIzaSyB6mjYhp5ca_RPpOdHu_Ul7E-YY6BYzmms')
             .done(function(data) {
                 var location = data.routes[0].legs[0].steps[0].distance.value;
-                $('#howClose').replaceWith("Your location is " + location + " feet away to the ")
+                $('#howClose').replaceWith("Your location is " + location + " feet away.")
+                placeDetails()
             })
     })
 
+    function placeDetails() {
+        $.get('https://galvanize-cors.herokuapp.com/https://maps.googleapis.com/maps/api/place/details/json?reference=' + allPlace[randomNumber].reference + '&key=AIzaSyB6mjYhp5ca_RPpOdHu_Ul7E-YY6BYzmms')
+            .done(function(data) {
+                var onStreet = data.result.address_components[1].long_name;
+                $('#street').append("Your place is on " + onStreet)
+            })
+    }
 });
