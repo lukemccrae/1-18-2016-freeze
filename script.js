@@ -87,7 +87,7 @@ $(document).ready(function() {
     function guessMe() {
         randomNumber = Math.floor(Math.random() * allPlaceName.length)
         placeGuess.push(allPlaceName[randomNumber])
-        $('#type').append("The place you're looking for is a " + placeType[randomNumber] + ".")
+        $('#type').replaceWith("The place is in the category " + "'" + placeType[randomNumber] + ".'")
         console.log(allPlaceName.length);
         console.log(placeGuess);
         console.log(randomNumber);
@@ -107,7 +107,7 @@ $(document).ready(function() {
         }
         console.log(dashes);
         $('#guessForm').append(dashes)
-        directionHint()
+
     }
 
     function isLetter(c) {
@@ -118,18 +118,28 @@ $(document).ready(function() {
         var submit = $('#inputBox').val();
         if (submit === placeGuess[0]) {
             $('#checkmark').css("display", "block")
+
         }
         console.log(a.key);
     })
 
 
 
-    function directionHint() {
-        console.log(allPlace[randomNumber].vicinity);
+    // function directionHint() {
+    //     console.log(allPlace[randomNumber].vicinity);
+    //     $.get('https://galvanize-cors.herokuapp.com/https://maps.googleapis.com/maps/api/directions/json?origin=' + latPosition + ',' + longPosition + '&destination=' + allPlace[randomNumber].vicinity + '&key=AIzaSyB6mjYhp5ca_RPpOdHu_Ul7E-YY6BYzmms')
+    //         .done(function(data) {
+    //             var location = data.routes[0].legs[0].steps[0].distance.value;
+    //             return location;
+    //         })
+    // }
+
+    $('#update').click(function() {
         $.get('https://galvanize-cors.herokuapp.com/https://maps.googleapis.com/maps/api/directions/json?origin=' + latPosition + ',' + longPosition + '&destination=' + allPlace[randomNumber].vicinity + '&key=AIzaSyB6mjYhp5ca_RPpOdHu_Ul7E-YY6BYzmms')
             .done(function(data) {
-                console.log(data.routes[0].legs[0].steps[0].distance.value);
+                var location = data.routes[0].legs[0].steps[0].distance.value;
+                $('#howClose').replaceWith("Your location is " + location + " feet away to the ")
             })
-    }
+    })
 
 });

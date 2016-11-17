@@ -8,12 +8,17 @@ main {
     flex: 1 0 auto;
 }
 
+#typeDIV {
+    height: 2em;
+}
+
 #map {
-    height: 15em;
+    height: 10em;
     width: 20em;
     border-width: .3em;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 0px;
 }
 
 html, body {
@@ -22,14 +27,33 @@ html, body {
     padding: 0;
 }
 
+#top {
+    display: flex;
+    height: 1em;
+}
+
+#heading {
+    margin-top: -.5em;
+}
+
+#howClose {}
+
 #greeting {
     height: 1em;
+    margin-bottom: 1em;
     padding-top: .5em;
 }
 
 #checkmarkBox {
     height: 6vh;
     width: 8vh;
+}
+
+#update {}
+
+#distance {
+    height: 3em;
+    margin-top: 1em;
 }
 
 #checkmark {
@@ -51,8 +75,10 @@ html, body {
 }
 
 #inputBox {
-    width: 40%;
+    width: 60%;
 }
 
+
+}
 
 }
